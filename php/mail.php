@@ -26,15 +26,17 @@ while($mailAndInitule = $statement->fetch(PDO::FETCH_ASSOC)){
     if($mail == $mailAndInitule['MAIL']){
         //ici on continue simplement de construire le mail
         //en rajoutant les taches à terminer
-        $msg .= '   - ' .$mailAndInitule['INTITULE'] . '</br>  </br>';
-        $msg .= 'Bonne journée à vous !';
+        $msg .= '   - ' .$mailAndInitule['INTITULE'] . '</br>';
     }
     else{
         //Changement d'utilisateur ou premier mail
         //on envoie pas de mail à la première itération
         //en revanche je rempli la variable mail et construit le mail
         //le mail est envoyé dès qu'on passe à un autre utilisateur
-        if(!empty($mail)) sendMail($mail,$msg);
+        if(!empty($mail)){
+            $msg .= 'Bonne journée à vous !';
+            sendMail($mail,$msg);
+        }
         $mail = $mailAndInitule['MAIL'];
         $msg .= 'Bonjour, </br> Vous avez des taches à finir : </br> </br>';
         $msg .= '   - ' .$mailAndInitule['INTITULE'] . '</br>';
@@ -44,6 +46,7 @@ while($mailAndInitule = $statement->fetch(PDO::FETCH_ASSOC)){
 //pour le dernier utilisateur je rentre pas dans la boucle
 //effectivement il n'y a pas d'autre utilisateur
 //son mail ne peut pas avoir été envoyé, mais a été construit.
+$msg .= ' </br> Bonne journée à vous !';
 sendMail($mail,$msg);
 
 

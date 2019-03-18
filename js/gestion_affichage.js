@@ -42,7 +42,10 @@
             //suppresion du header du modal
             //soit titre et le bouton close
             $("#header_tache").children().remove();
-            $("#body_tache").children().not('#monForm2').remove();
+            $("#tache_col").children().remove();
+            $("#date_col").children().remove();
+            $("#checkbox_col").children().remove();
+
             $('#monForm2').children().remove();
 
             //remplissage entete
@@ -69,8 +72,32 @@
                console.log(data);
                for(let index in data){
                    let tache = new Tache(data[index]);
-                   $('#body_tache')
-                       .prepend($('<p/>').attr('class','text-center').html(tache.toHtml()));
+
+
+
+                   $('#tache_col')
+                       .append($('<p/>').attr('class','text-sm-center').html(tache.toHtml()));
+
+                   $('#date_col').append($('<p/>').html('date').attr({
+                       'class':'text-sm-right',
+                       'id':tache.toHtml()
+                   }))
+
+                   $('#checkbox_col')
+                       .append($('<p/>')
+                           .append($("<input/>")
+                               .attr({
+                                   'type':'checkbox',
+                                   'vertical-align':'middle',
+                                   'label':data.num,
+                                   'id':data.num,
+                                   'for':tache.toHtml()
+                               })
+                               .html(tache.toHtml()))
+                       )
+
+
+
                }
             });
 
@@ -180,7 +207,7 @@
 
             }).done(function(data){
 
-                if(typeof data === 'object')
+                if(typeof data === 'string')
                 {
                     $('#erreur_tache').remove();
                     $('#body_tache')
@@ -190,15 +217,35 @@
                                 'id':'erreur_tache'
                             })
                             .append($('<p/>')
-                                .attr('class', 'text-center mb-0')
-                                .html(data.message)
+                                .attr('class', 'text-sm-center mb-0')
+                                .html(data)
                             )
                         )
                 }
                 else{
                     $('#erreur_tache').remove();
-                    let tache = new Tache(data);
-                    $('#body_tache').prepend($("<p/>").attr("class","text-center").html(tache.toHtml()));
+                    let tache = new Tache(data.intitule);
+                    $('#tache_col')
+                        .append($('<p/>').attr('class','text-center').html(tache.toHtml()));
+
+                    $('#date_col').append($('<p/>').html('date').attr({
+                        'class':'text-sm-right',
+                        'id':tache.toHtml()
+                    }))
+
+                    $('#checkbox_col')
+                        .append($('<p/>')
+                            .append($("<input/>")
+                                .attr({
+                                    'type':'checkbox',
+                                    'vertical-align':'middle',
+                                    'label':data.num,
+                                    'id':data.num,
+                                    'for':tache.toHtml()
+                                })
+                                .html(tache.toHtml()))
+                        )
+
                 }
 
             })

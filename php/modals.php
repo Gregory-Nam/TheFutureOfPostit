@@ -48,6 +48,19 @@
             </div>
 
             <div class="modal-body" id="body_tache">
+
+                <div class="container" id="grid">
+                    <div class="row">
+                        <div class="col-sm" id="checkbox_col">
+                        </div>
+                        <div class="col-sm-8" id="tache_col">
+                        </div>
+                        <div class="col-sm" id="date_col">
+                        </div>
+                    </div>
+                </div>
+
+
                 <form id="monForm2">
 
                 </form>
