@@ -25,11 +25,19 @@ if(isset($_POST['titre_input_tache']) && !empty($_POST['titre_input_tache']) && 
         $query = "INSERT INTO taches (INTITULE, POSTIT, DATE_T)  VALUES ('". $tache ."','".$_POST['idbd']."','".$_POST['date_input_tache']."')";
         $stmt = $dbh->prepare($query);
         $stmt->execute();
-        $numTache = sizeof($_SESSION['postits'][$_POST['id']]['TACHES']);
-        $_SESSION['postits'][$_POST['id']]['TACHES'][] = $tache;
 
-        $retour['num'] = $numTache;
-        $retour['intitule'] = $tache;
+
+        $retour['INTITULE'] = $tache;
+        $retour['DATE'] = $_POST['date_input_tache'];
+        $retour['ETAT'] = 'false';
+
+        $_SESSION['postits'][$_POST['id']]['TACHES'][] = $retour;
+        $numTache = sizeof($_SESSION['postits'][$_POST['id']]['TACHES']) - 1;
+
+        $retour['NUM'] = $numTache;
+
+
+
         echo json_encode($retour);
     }
 

@@ -1,11 +1,11 @@
 (function(){
     "use strict";
     $(document).ready(function() {
-
+        
         //verification de la connexion
         $('#monForm').submit(function(){
             $.ajax({
-                url: 'utilisateur_handler.php',
+                url: '../php/utilisateur_handler.php',
                 method:'POST',
                 dataType: 'json',
                 data: $(this).serialize()
@@ -44,6 +44,8 @@
             });
             return false;
         });
+
+
 
 
 

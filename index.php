@@ -8,14 +8,36 @@ session_start();
         <meta charset="UTF-8">
         <title>THE FUTURE OF POST IT</title>
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
         <script src="/js/jquery-3.3.1.js"></script>
+
+
+        <script src="/js/redirection_connexion.js"></script>
+        <script src="/js/gestion_affichage.js"></script>
+        <script src="/js/verif_deconnexion.js"></script>
+
         <script src="/js/taches.js"></script>
         <script src="/js/postit.js"></script>
 
-        <script src="/js/gestion_affichage.js"></script>
+        <script src="/js/creationElement.js"></script>
+        <script src="/js/formulaires.js"></script>
+
+
+
+
+
+
+
+
 
 
     </head>
+    <style>
+        html,body{
+            height:100%;
+        }
+    </style>
 
     <body>
 
@@ -29,7 +51,7 @@ session_start();
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto" id="navbarList">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Mes Post-IT
+                        <a class="nav-link" href=".">Mes Post-IT
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
@@ -42,10 +64,10 @@ session_start();
     <!-- Page Content -->
     <div class="container" id="mesPostits">
         <div class="row" id="row1">
-            <div class="col-lg-4 text-center" id="col0" >
-                <div class="card mt-5" style="width: 18rem;">
+            <div class="col-lg-4 mt-5 bt-5 text-center" id="col0" >
+                <div class="card h-100" style="width: 18rem;">
                     <div class="card-body">
-                        <button class="btn btn-outline-light" data-toggle="modal" data-target="#modal_nouveau_postit"> <img class="card-img-top" src="img/plus_button.png" > </button>
+                        <button class="btn btn-outline-light mt-3" data-toggle="modal" data-target="#modal_nouveau_postit"> <img class="card-img-top w-25 h-25" src="img/plus_button.png" > </button>
                         <h5 class="card-title mt-2"> Ajouter un post-it !</h5>
                     </div>
                 </div>

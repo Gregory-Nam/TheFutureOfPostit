@@ -14,7 +14,7 @@ $bd = new bd();
 $dbh = $bd->getBdd();
 
 $query = "SELECT distinct MAIL,INTITULE FROM  utilisateurs u, postit p, taches t WHERE ".
-         "p.ID = t.POSTIT AND u.ID = p.UTILISATEUR AND t.DATE_T >= '".date('Y-m-d')."'";
+         "p.ID = t.POSTIT AND u.ID = p.UTILISATEUR AND t.ETAT = 0 AND t.DATE_T >= '".date('Y-m-d')."'";
 
 $statement = $dbh->prepare($query);
 $statement->execute();

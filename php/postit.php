@@ -22,19 +22,36 @@ class postit {
     //la base de données
     function insertPostit() {
 
-        $postit['NOM']= htmlspecialchars($_POST['NOM']);
+        if(isset($_POST['NOM']) && !empty($_POST['NOM']))
+        {
+            $nom = htmlspecialchars($_POST['NOM']);
+            if(strlen($nom) > 15)
+            {
+                echo json_encode("Le nom du post-it est trop long");
+            }
+            else if(preg_match("/([%\$#\*]+)/", $nom))
+            {
+                echo json_encode("Un des caractères n'est pas valide (%,$,#,*)");
+            }
+            else if($this->existeDeja($nom))
+            {
+                echo json_encode("Vous avez déjà un post-it qui porte ce nom");
+            }
+            else
+            {
+                $postit['NOM']= $nom;
+                $query = "INSERT INTO postit (NOM, UTILISATEUR)  VALUES ('". $nom ."','".$_SESSION['userid']."')";
+                $stmt = $this->dbh->prepare($query);
+                $stmt->execute();
+                $postit['ID'] = $this->dbh->lastInsertId();
+                $_SESSION['postits'][] = $postit;
+                echo json_encode($_SESSION['postits']);
+            }
 
-        $query = "INSERT INTO postit (NOM, UTILISATEUR)  VALUES ('". $postit['NOM'] ."','".$_SESSION['userid']."')";
-        $stmt = $this->dbh->prepare($query);
-        $stmt->execute();
-        $numPostit = count($_SESSION['postits']);
-        $postit['ID'] = $this->dbh->lastInsertId();
-        $_SESSION['postits'][] = $postit;
-
-
-
-
-        echo json_encode($_SESSION['postits']);
+        }
+        else{
+            echo json_encode("Veuillez rentrer un nom pour votre post-it");
+        }
     }
 
 
@@ -56,11 +73,74 @@ class postit {
         $query = "SELECT * FROM taches WHERE POSTIT =".$idbd;
         $statement = $this->dbh-> prepare($query);
         $statement->execute();
+        $i = 0;
         while($postit = $statement->fetch(PDO::FETCH_ASSOC)){
 
-            $_SESSION['postits'][$id]['TACHES'][] = $postit['INTITULE'];
+            $_SESSION['postits'][$id]['TACHES'][]['INTITULE'] = $postit['INTITULE'];
+            $_SESSION['postits'][$id]['TACHES'][$i]['DATE'] = $postit['DATE_T'];
+            $_SESSION['postits'][$id]['TACHES'][$i]['ETAT'] = $postit['ETAT'];
+            ++$i;
+
         }
 
+    }
+
+
+    function setEtat($id, $idPostit,$idPostitUser,$etat){
+        $_SESSION['postits'][$idPostitUser]['TACHES'][$id]['ETAT'] = $etat;
+        echo json_encode($_SESSION['postits'][$idPostitUser]['TACHES'][$id]);
+
+        $query = "UPDATE taches ".
+                 "SET ETAT =".$etat.
+                 " WHERE ID IN ".
+                     "(SELECT ID ".
+                       "FROM ".
+                        "(SELECT *,row_number() OVER (ORDER BY ID) 'nb' ".
+                        "FROM taches ".
+                        "WHERE postit = ". $idPostit .") ".
+                      "AS t WHERE t.nb =".++$id.")";
+
+
+        $statement = $this->dbh->prepare($query);
+        $statement->execute();
+
+
+
+    }
+
+    function supprimerPostit($id){
+
+        $query = "DELETE FROM postit WHERE ID =".$id;
+        $statement = $this->dbh->prepare($query);
+        $statement->execute();
+    }
+    function recupTacheDone($idbd, $id){
+        $query = "SELECT * FROM taches WHERE POSTIT=".$idbd." AND ETAT=1";
+        $statement = $this->dbh->prepare($query);
+        $statement->execute();
+
+        $taskDone = array();
+
+        while($task = $statement->fetch(PDO::FETCH_ASSOC)) {
+          $taskDone[]=$task;
+        }
+        echo json_encode($taskDone);
+
+    }
+
+    function existeDeja($nom){
+        $query = "SELECT * FROM postit WHERE NOM = '".$nom."' AND UTILISATEUR = '".$_SESSION['userid']."'";
+        $statement = $this->dbh->prepare($query);
+        $statement->execute();
+
+        if($statement->rowCount() == 0){
+
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
 }

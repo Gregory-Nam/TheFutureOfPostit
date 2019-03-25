@@ -1,18 +1,18 @@
 <!--Nouveau Postit-->
-<div class="modal fade" id="modal_nouveau_postit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+<div class="modal fade" id="modal_nouveau_postit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false" aria-hidden="true" >
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
 
             <div class="modal-header">
 
                 <h5 class="modal-title" id="nouveau_postit">Nouveau Post-it</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="add_postit">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+<!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="add_postit">-->
+<!--                    <span aria-hidden="true">&times;</span>-->
+<!--                </button>-->
 
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body" id="modal_postit">
                 <form id="monForm">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nom du post-IT</label>
@@ -28,8 +28,8 @@
 
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" form="monForm" class="btn btn-primary form-control"  id="send">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="submit" form="monForm" class="btn btn-primary form-control"  id="send">Ajouter le post-it</button>
 
             </div>
 
@@ -38,7 +38,7 @@
 </div>
 
 <!-- Nouvelle tache-->
-<div class="modal fade" id="modal_nouvelle_tache" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+<div class="modal fade" id="modal_nouvelle_tache" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false" aria-hidden="true" >
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content" id = "content_modal_tache">
 
@@ -68,8 +68,8 @@
 
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-secondary"">Close</button>
-                <button type="submit" class="btn btn-primary form-control"  id="send2">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closepostit"> Fermer le postit</button>
+                <button type="submit" class="btn btn-primary form-control"  id="send2"> Ajouter la tâche</button>
 
             </div>
 
