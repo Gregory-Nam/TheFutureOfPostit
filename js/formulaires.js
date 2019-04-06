@@ -33,7 +33,7 @@
                 {
                     $('#erreur_postit').remove();
                     $("#send").attr('data-dismiss','modal').click().removeAttr('data-dismiss');
-
+                    $('input').val('');
                     let index = data.length - 1;
                     let postit = new Postit(data[index],index)
                     creationPostit(postit);

@@ -4,12 +4,12 @@
     $(document).ready(function() {
 
         $('#closepostit').click(function () {
+            $('#erreur_tache').remove();
             $('input[type=checkbox]').each(function () {
                 let idTask = $(this).attr('data-t');
                 let idPostit = $(this).attr('data-postit');
                 let idPostitUser = $(this).attr('data-postituser')
                 let etat = $(this).prop("checked") ? '1' : '0';
-                console.log(etat);
                 $.ajax({
                     url: "php/postit_handler.php",
                     type: "POST",
@@ -21,12 +21,16 @@
                         'etat': etat
                     }
                 }).done(function (data) {
-                    console.log(data);
+                    $('input').val('');
                 }).fail(function (jqXHR, textStatus) {
                     alert(textStatus);
                 })
 
             });
+        })
+
+        $('#fermernouveau').click(function(){
+            $('#erreur_postit').remove();
         })
 
         $(document).on("change", "input[type='checkbox']", function () {

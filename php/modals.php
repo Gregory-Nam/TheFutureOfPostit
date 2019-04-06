@@ -28,7 +28,7 @@
 
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-secondary" id="fermernouveau" data-dismiss="modal">Fermer</button>
                 <button type="submit" form="monForm" class="btn btn-primary form-control"  id="send">Ajouter le post-it</button>
 
             </div>

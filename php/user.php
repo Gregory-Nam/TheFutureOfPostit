@@ -23,7 +23,7 @@ class Utilisateur{
             $statement = $dbh->prepare($query);
             $statement->execute();
             $test = $statement->fetch(PDO::FETCH_ASSOC);
-            if($_POST['username'] == $test['NOM_UTILISATEUR'] && $_POST['password'] == $test['MOT_DE_PASSE'])
+            if($_POST['username'] == $test['NOM_UTILISATEUR'] && sha1($_POST['password']) == $test['MOT_DE_PASSE'])
             {
                 $_SESSION['username'] = $test['NOM_UTILISATEUR'];
                 $_SESSION['userid'] = $test['ID'];
@@ -31,13 +31,13 @@ class Utilisateur{
             }
             else
             {
-                echo json_encode("mauvais_identifiant");
+                echo json_encode("La combinaison est incorrecte");
             }
 
         }
         else
         {
-            echo json_encode("champ_manquant");
+            echo json_encode("Veuillez saisir tous les champs");
         }
 
     }
