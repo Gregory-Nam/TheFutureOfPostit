@@ -5,7 +5,7 @@ class bd {
     private static $bdh;
 
     private static function setBd(){
-        self::$bdh = new PDO('mysql:host=mysql-futureofpostit.alwaysdata.net;dbname=futureofpostit_bd', "178438", "789456123");
+        self::$bdh = new PDO('mysql:host=;dbname=futureofpostit_bd', "", "");
     }
 
     public function getBdd(){
